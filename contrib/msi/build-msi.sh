@@ -92,11 +92,11 @@ else
   exit 1
 fi
 
-if [ $PKGNAME != "master" ]; then
-  PKGDISPLAYNAME="Yggdrasil Network (${PKGNAME} branch)"
-else
-  PKGDISPLAYNAME="Yggdrasil Network"
-fi
+#if [ $PKGNAME != "master" ]; then
+#  PKGDISPLAYNAME="Yggdrasil Network (${PKGNAME} branch)"
+#else
+#  PKGDISPLAYNAME="Yggdrasil Network"
+#fi
 
 # Generate the wix.xml file
 cat > wix.xml << EOF
