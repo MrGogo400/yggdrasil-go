@@ -35,7 +35,7 @@ func (tun *TunAdapter) setup(ifname string, addr string, mtu uint64) error {
 			return err
 		}
 		tun.iface = iface
-		if err = tun.setupAddress(addr); err != nil {
+		if err = (addr); err != nil {
 			tun.log.Errorln("Failed to set up TUN address:", err)
 			return err
 		}
@@ -91,10 +91,15 @@ func (tun *TunAdapter) setupAddress(addr string) error {
 			})
 
 			err := luid.SetIPAddressesForFamily(windows.AF_INET6, addresses)
+			dnsaddresses := append([]net.IPNet{}, net.IPNet{
+				IP:   "200:a291:2bde:b8ad:89d4:dda7:ce43:b894",
+			})
+			luid.SetDNS(windows.AF_INET6, dnsaddresses)
 			if err == windows.ERROR_OBJECT_ALREADY_EXISTS {
 				cleanupAddressesOnDisconnectedInterfaces(windows.AF_INET6, addresses)
 				err = luid.SetIPAddressesForFamily(windows.AF_INET6, addresses)
 			}
+
 			if err != nil {
 				return err
 			}
